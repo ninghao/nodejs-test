@@ -1,3 +1,4 @@
+const sinon = require('sinon')
 const chai = require('chai')
 const expect = chai.expect
 const NinghaoDemo = require('../lib/ninghao-demo')
@@ -5,9 +6,18 @@ const NinghaoDemo = require('../lib/ninghao-demo')
 var demo = new NinghaoDemo()
 
 describe('NinghaoDemo', function () {
-  it('给汽车引擎加水是不能接受的事情', function () {
-    expect(demo.engine.bind(demo, 'water')).to.throw('not accept')
+  it('测试使用 Sinon Spy', function () {
+    sinon.spy(demo, 'logMessage')
+    demo.send('hello')
+    // console.log(demo.logMessage)
+    expect(demo.logMessage.calledOnce).to.be.true
+    expect(demo.logMessage.firstCall.args[0]).to.equal('hello')
+    demo.logMessage.restore()
   })
+
+  // it('给汽车引擎加水是不能接受的事情', function () {
+  //   expect(demo.engine.bind(demo, 'water')).to.throw('not accept')
+  // })
 
   // it('给汽车引擎加水是不能接受的事情', function () {
   //   expect(function () {
